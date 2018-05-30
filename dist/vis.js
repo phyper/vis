@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 4.21.0
- * @date    2018-05-07
+ * @date    2018-05-30
  *
  * @license
  * Copyright (C) 2011-2017 Almende B.V, http://almende.com
@@ -11766,6 +11766,7 @@ function Group(groupId, data, itemSet) {
   this.itemSet = itemSet;
   this.isVisible = null;
   this.stackDirty = true; // if true, items will be restacked on next redraw
+  this.isVirtualizationDisabled = itemSet.options.disableVirtualization; // if true, items are rendered even if they are not on a screen
 
   if (data && data.nestedGroups) {
     this.nestedGroups = data.nestedGroups;
@@ -12114,7 +12115,7 @@ Group.prototype._updateItemsVerticalPosition = function (margin) {
   for (var i = 0, ii = this.visibleItems.length; i < ii; i++) {
     var item = this.visibleItems[i];
     item.repositionY(margin);
-    if (!this.isVisible && this.groupId != "__background__") {
+    if (!this.isVirtualizationDisabled && !this.isVisible && this.groupId != "__background__") {
       if (item.displayed) item.hide();
     }
   }
@@ -12618,7 +12619,7 @@ Group.prototype._traceVisible = function (initialPos, items, visibleItems, visib
  * @private
  */
 Group.prototype._checkIfVisible = function (item, visibleItems, range) {
-  if (this.itemSet.options && this.itemSet.options.disableVirtualization || item.isVisible(range)) {
+  if (this.isVirtualizationDisabled || item.isVisible(range)) {
     if (!item.displayed) item.show();
     // reposition item horizontally
     item.repositionX();
@@ -12641,7 +12642,7 @@ Group.prototype._checkIfVisible = function (item, visibleItems, range) {
  * @private
  */
 Group.prototype._checkIfVisibleWithReference = function (item, visibleItems, visibleItemsLookup, range) {
-  if (this.itemSet.options && this.itemSet.options.disableVirtualization || item.isVisible(range)) {
+  if (this.isVirtualizationDisabled || item.isVisible(range)) {
     if (visibleItemsLookup[item.id] === undefined) {
       visibleItemsLookup[item.id] = true;
       visibleItems.push(item);
