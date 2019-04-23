@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 4.21.0
- * @date    2018-05-30
+ * @date    2019-04-23
  *
  * @license
  * Copyright (C) 2011-2017 Almende B.V, http://almende.com
@@ -9777,7 +9777,7 @@ Core.prototype._create = function (container) {
 Core.prototype.setOptions = function (options) {
   if (options) {
     // copy the known options
-    var fields = ['width', 'height', 'minHeight', 'maxHeight', 'autoResize', 'start', 'end', 'clickToUse', 'dataAttributes', 'hiddenDates', 'locale', 'locales', 'moment', 'rtl', 'zoomKey', 'horizontalScroll', 'verticalScroll'];
+    var fields = ['width', 'height', 'minHeight', 'maxHeight', 'autoResize', 'start', 'end', 'clickToUse', 'dataAttributes', 'hiddenDates', 'disableVirtualization', 'locale', 'locales', 'moment', 'rtl', 'zoomKey', 'horizontalScroll', 'verticalScroll'];
     util.selectiveExtend(fields, this.options, options);
 
     this.dom.rollingModeBtn.style.visibility = 'hidden';
